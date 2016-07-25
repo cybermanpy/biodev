@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	{% load staticfiles %}
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=divice-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<title> {% block title %}  {% endblock %} </title>
+</head>
+<body>
+	<header class="header relative border-bottom">
+		<div class="logo">
+			<div class="wrap center-block">
+				<figure class="image isotipo left">
+					<img src="{% static 'img/logoBlack.png' %}" alt="Torneo">
+				</figure>
+			</div>
+			<div class="name center-text">
+				<h2 class="title-torneo">{{ title|upper }} </h2>
+			</div>
+		</div>
+		<a href="" class="button-menu icon-menu"></a>
+		<nav class="menu">
+			<ul class="list center-block wrap">
+				<li class="item"><a href="/">Inicio</a></li>
+				<li class="item"><a href="/users/views">Usuarios</a></li>
+				<li class="item"><a href="">Marcaciones</a></li>
+				<li class="item"><a href="">Contáctanos</a></li>
+			</ul>
+		</nav>
+		<div class="title">
+		
+		</div>
+	</header>
+	<section class="torneo small medium large">
+		{% block content %} {% endblock %}
+	</section>
+	<section class="container">
+		{% block container %} {% endblock %}
+	</section>
+	<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

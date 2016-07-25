@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% load widget_tweaks %}
+{% load checks_extras %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<ul class="list-group">
+	{% regroup list_check by checktime.day as day %}
+	{% for d in day %}	
+		<li class="list-group-item list-group-item-success">{{d.grouper|dateF:list1}}  </li>
+		{% for l in d.list %}
+			{% if l.checktime.hour > 5 and l.checktime.hour < 12 %}
+				<li class="list-group-item">Entrada: {{ l.checktime|dateF1 }} </li>
+			{% elif l.checktime.hour > 13 %}
+				<li class="list-group-item">Salida: {{ l.checktime|dateF1 }} </li>
+			{% endif %}
+		{% endfor %}
+	{% endfor%}
+</ul>
+{% endblock %}
