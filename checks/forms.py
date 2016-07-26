@@ -1,5 +1,6 @@
 #from django.forms import ModelForm
 from django import forms
+# from django.core.exceptions import ValidationError
 
 class FormSearchCheck(forms.Form):
 	MONTHS = (
@@ -20,7 +21,13 @@ class FormSearchCheck(forms.Form):
 		("2016", "2016"),
 		("2015", "2015"),
 		)
-	ci = forms.CharField(label='Cedula', error_messages={'required': 'Debe ingresar su cedula'})
+	ci = forms.CharField(label='Cedula', error_messages={'required': 'Debe ingresar numero de cedula'})
 	month = forms.ChoiceField(choices=MONTHS)
 	year = forms.ChoiceField(choices=YEARS)
-	# fecha = forms.CharField(label='Mes', error_messages={'required': 'Debe ingresar un mes'})
+	
+	# def clean_ci(self):
+	# 	cd = self.cleaned_data
+	# 	ci = cd.get('ci')
+	# 	if ci == '':
+	# 		raise forms.ValidationError("Deber ingresar numero de cedula")
+	# 	return ci

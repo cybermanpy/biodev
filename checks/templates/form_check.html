@@ -9,33 +9,24 @@
 
     <form method="POST">
    		{% csrf_token %}
-
-   		{{ form.non_field_errors }}
-
-   		{% if form.errors %}
-   			{{ form.errors|pluralize }}
-   		{% endif %}
-
    		 <div class="form-group row">
    			    <label for="cedula" class="col-sm-2">Cedula</label>
             <div class="col-sm-10">
                 {% render_field form.ci class="form-control" %}
+                {{ form.ci.errors }}
             </div>
-            <div>{{ form.ci.errors }}</div>
         </div>
         <div class="form-group row">
    			    <label for="mes" class="col-sm-2">Mes</label>
             <div class="col-sm-10">
                	{% render_field form.month class="form-control" %}
             </div>
-            <div>{{ form.month.errors }}</div>
         </div>
         <div class="form-group row">
             <label for="año" class="col-sm-2">Año</label>
             <div class="col-sm-10">
                 {% render_field form.year class="form-control" %}
             </div>
-            <div>{{ form.year.errors }}</div>
         </div>
         <button type="submit" class="btn btn-primary">Buscar</button>
    </form>

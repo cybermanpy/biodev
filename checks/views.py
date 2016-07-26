@@ -7,7 +7,7 @@ from .models import Check
 from usersinfo.models import Userinfo
 import datetime
 from django.db.models import Q
-#from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
+# from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
@@ -17,7 +17,7 @@ def formChecks(request):
     template1 = loader.get_template('list_checks.html')
     if request.method == 'POST':
         form = FormSearchCheck(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             ci = request.POST['ci']
             month = request.POST['month']
             year = request.POST['year']
@@ -32,10 +32,10 @@ def formChecks(request):
             return HttpResponse(template1.render(context1, request))
     else:
         form = FormSearchCheck()
-        context = {
-            'title': title,
-            'form': form,
-        }
+    context = {
+        'title': title,
+        'form': form,
+    }
     return HttpResponse(template.render(context, request))
 
 # def formChecks(request):
