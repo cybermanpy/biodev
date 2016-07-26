@@ -24,6 +24,11 @@ def sub(value, arg):
             return ''
 sub.is_safe = False
 
+def formatDate(arg):
+    format = ('%H:%M:%S')
+    arg = arg.strftime(format)
+    return arg
+
 @register.filter
 def suma(value, arg):
     """Sum the arg from the value."""
@@ -45,15 +50,22 @@ def cutstring(value, arg):
 
 @register.filter
 def dateF(value, arg):
-	format = ('%A %d')
 	y = int(arg['y'])
 	m = int(arg['m'])
 	n = datetime.date(y, m, value)
-	s = n.strftime(format)
 	return n
 
 @register.filter
 def dateF1(value):
-	format = ('%H:%M:%S')
-	s = value.strftime(format)
-	return s
+    return formatDate(value)
+
+@register.filter
+def total(value, arg):
+    y = arg['y']
+    m = arg['m']
+    d = str(value.day)
+    h = '15:00:00'
+    s = y + '-' + m + '-' + d + ' ' + h
+    s = datetime.datetime.strptime(s, '%Y-%m-%d %H:%M:%S')
+    r = value - s
+    return r
