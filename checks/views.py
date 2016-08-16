@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.template import loader
 from .forms import FormSearchCheck
 from .models import Check
+from usersinfo.models import Userinfo
+from django.core.exceptions import ObjectDoesNotExist
 # from django.db.models import Q
 # from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
 
@@ -20,9 +22,20 @@ def formChecks(request):
             month = request.POST['month']
             year = request.POST['year']
             list1 = { 'm': month, 'y': year }
-            list_check = Check.objects.filter(userid__ssn=ci, checktime__month=month, checktime__year=year).order_by('-checktime')
-            for li in list_check:
-                name = li.userid.name
+            try:
+                list_check = Check.objects.filter(userid__ssn=ci, checktime__month=month, checktime__year=year).order_by('-checktime')
+                username = Userinfo.objects.get(ssn=ci)
+                name = username.name
+            except ObjectDoesNotExist:
+                error = "El funcionario o la marcación no existe"
+                templateError = loader.get_template('error.html')
+                contextError = {
+                    'title': title,
+                    'error': error,
+                }
+                return HttpResponse(templateError.render(contextError, request))
+            # for li in list_check:
+            #     name = li.userid.name
             # list_check = Check.objects.filter(Q(userid=cedula) | Q(checktime__month=m)).order_by('-checktime')
             context1 = {
                 'title': title,
