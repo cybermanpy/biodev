@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% load widget_tweaks %}
+{% load checks_extras %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+
+<ul class="list-group">
+	{% regroup list_user by speday__startspecday.day as day %}
+	{% for d in day %}
+		<li class="list-group-item list-group-item-success">{{d.grouper}}</li>
+		{% for u in d.list %}
+			<li class="list-group-item">Fecha de Inicio: {{ u.speday__startspecday|dateF1 }}</li>
+			<li class="list-group-item">Justificación {{ u.speday__yuanying }}</li>
+			<li class="list-group-item">Fecha Fin: {{ u.speday__endspecday|dateF1 }}</li>
+		{% endfor%}
+	{% endfor %}
+</ul>
+
+{% endblock %}

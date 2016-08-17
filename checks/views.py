@@ -23,9 +23,12 @@ def formChecks(request):
             year = request.POST['year']
             list1 = { 'm': month, 'y': year }
             try:
-                list_check = Check.objects.filter(userid__ssn=ci, checktime__month=month, checktime__year=year).order_by('-checktime')
-                username = Userinfo.objects.get(ssn=ci)
-                name = username.name
+                # list_check = Check.objects.filter(userid__ssn=ci, checktime__month=month, checktime__year=year).order_by('-checktime')
+                getuser = Userinfo.objects.get(ssn=ci)
+                name = getuser.name
+                pkuser = getuser.userid
+                list_check = Userinfo.objects.filter(check__userid=pkuser, check__checktime__month=month, check__checktime__year=year).values('check__checktime').order_by('-check__checktime')
+                list_speday = Userinfo.objects.filter(speday__userid=pkuser, speday__startspecday__month=month).values('speday__startspecday', 'speday__yuanying', 'speday__endspecday').order_by('-speday__startspecday')
             except ObjectDoesNotExist:
                 error = "El funcionario o la marcación no existe"
                 templateError = loader.get_template('error.html')
@@ -40,6 +43,7 @@ def formChecks(request):
             context1 = {
                 'title': title,
                 'list_check': list_check,
+                'list_speday': list_speday,
                 'list1': list1,
                 'name': name,
             }
@@ -49,6 +53,18 @@ def formChecks(request):
     context = {
         'title': title,
         'form': form,
+    }
+    return HttpResponse(template.render(context, request))
+
+def viewAll(request):
+    title = 'Sistema de Marcación'
+    # list_user = Userinfo.objects.filter(check__userid=94, check__checktime__month=8).values('name', 'ssn', 'check__checktime').order_by('-check__checktime')
+    list_user = Userinfo.objects.filter(speday__userid=94, speday__startspecday__month=8).values('speday__startspecday', 'speday__yuanying', 'speday__endspecday').order_by('-speday__startspecday')
+    # template = loader.get_template('list_user.html')
+    template = loader.get_template('list_speday.html')
+    context = {
+        'title': title,
+        'list_user': list_user,
     }
     return HttpResponse(template.render(context, request))
 
