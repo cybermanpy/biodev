@@ -1,3 +1,5 @@
+# coding=utf-8
+
 #from django.forms import ModelForm
 from django import forms
 # from django.core.exceptions import ValidationError
@@ -21,9 +23,14 @@ class FormSearchCheck(forms.Form):
 		("2016", "2016"),
 		("2015", "2015"),
 		)
-	ci = forms.CharField(label='Cedula', error_messages={'required': 'Debe ingresar numero de cedula'})
+	VALUES = (
+		('1', 'Nro. Cedula'),
+		('2', 'Nro. Ficha'),
+		)
+	ci = forms.CharField(label='Cedula', error_messages={'required': 'Debe ingresar un valor'})
 	month = forms.ChoiceField(choices=MONTHS)
 	year = forms.ChoiceField(choices=YEARS)
+	options = forms.ChoiceField(choices=VALUES, widget=forms.RadioSelect, error_messages={'required': 'Debe seleccionar una opción'})
 	
 	# def clean_ci(self):
 	# 	cd = self.cleaned_data

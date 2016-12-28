@@ -8,34 +8,35 @@
 
 {% block content %}
 <ul class="list-group">
-	<li class="list-group-item list-group-item-info">{{ name }}</li>
-	{% regroup list_check by check__checktime.day as day %}
-	{% for d in day %}	
-		<li class="list-group-item list-group-item-success">{{d.grouper|dateF:list1}}</li>
-		{% for l in d.list %}
-			{% if l.check__checktime|dateF1 > '15:00:00' %}
-				<li class="list-group-item">RE: {{ l.check__checktime|total:list1 }}</li>
-			{% endif %}
-			{% if l.check__checktime.hour > 5 and l.check__checktime.hour < 12 %}
-				<li class="list-group-item">Entrada: {{ l.check__checktime|dateF1 }}</li>
-			{% elif l.check__checktime.hour > 13 %}
-				<li class="list-group-item">Salida: {{ l.check__checktime|dateF1 }}</li>
-			{% endif %}
-		{% endfor %}
-	{% endfor%}
+    <li class="list-group-item list-group-item-info">{{ name }} </li>
+    {% regroup list_check by check__checktime.day as day %}
+    {% for d in day %}  
+        <li class="list-group-item list-group-item-success">Día: {{d.grouper|dateF:list1}}</li>
+        {% for l in d.list %}
+            {% if l.check__checktime.hour > 4 and l.check__checktime.hour < 12 %}
+                <li class="list-group-item">Entrada: {{ l.check__checktime|dateF1 }}</li>
+            {% elif l.check__checktime.hour > 13 %}
+                <li class="list-group-item">Salida: {{ l.check__checktime|dateF1 }}</li>
+            {% endif %}
+            {% if l.check__checktime|dateF1 > '15:00:00' %}
+                <li class="list-group-item">Hora extras por día: {{ l.check__checktime|total:list1 }}</li>
+            {% endif %}
+
+        {% endfor %}
+    {% endfor%}
 </ul>
 
 <ul class="list-group">
-	<li class="list-group-item list-group-item-info"> Justificativos </li>
-	{% regroup list_speday by speday__startspecday.day as day %}
-	{% for d in day %}
-		<li class="list-group-item list-group-item-success">{{d.grouper|dateF:list1}}</li>
-		{% for u in d.list %}
-			<li class="list-group-item">Hora Inicio: {{ u.speday__startspecday|dateF1 }}</li>
-			<li class="list-group-item">Hora Fin: {{ u.speday__endspecday|dateF1 }}</li>
-			<li class="list-group-item">Justificación: {{ u.speday__yuanying }}</li>
-		{% endfor%}
-	{% endfor %}
+    <li class="list-group-item list-group-item-info"> Justificativos </li>
+    {% regroup list_speday by speday__startspecday.day as day %}
+    {% for d in day %}
+        <li class="list-group-item list-group-item-success">{{d.grouper|dateF:list1}}</li>
+        {% for u in d.list %}
+            <li class="list-group-item">Hora Inicio: {{ u.speday__startspecday|dateF1 }}</li>
+            <li class="list-group-item">Hora Fin: {{ u.speday__endspecday|dateF1 }}</li>
+            <li class="list-group-item">Justificación: {{ u.speday__yuanying }}</li>
+        {% endfor%}
+    {% endfor %}
 </ul>
 
 {% endblock %}

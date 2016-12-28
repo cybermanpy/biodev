@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from django.http import HttpResponse
+from django.http import HttpResponse #, Http404
 from django.template import loader
 from .forms import FormSearchCheck
 from .models import Check
@@ -9,6 +9,11 @@ from django.core.exceptions import ObjectDoesNotExist
 # from django.db.models import Q
 # from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
 
+from datetime import datetime
+import calendar
+from django.shortcuts import get_object_or_404
+# import json
+from django.core import serializers
 # Create your views here.
 
 def formChecks(request):
@@ -21,16 +26,21 @@ def formChecks(request):
             ci = request.POST['ci']
             month = request.POST['month']
             year = request.POST['year']
+            option = request.POST['options']
             list1 = { 'm': month, 'y': year }
             try:
                 # list_check = Check.objects.filter(userid__ssn=ci, checktime__month=month, checktime__year=year).order_by('-checktime')
-                getuser = Userinfo.objects.get(ssn=ci)
+                if option == '1':
+                    getuser = Userinfo.objects.get(ssn=ci)
+                elif option == '2':
+                    getuser = Userinfo.objects.get(badgenumber=ci)
+                # getuser = Userinfo.objects.get(ssn=ci)
                 name = getuser.name
                 pkuser = getuser.userid
-                list_check = Userinfo.objects.filter(check__userid=pkuser, check__checktime__month=month, check__checktime__year=year).values('check__checktime').order_by('-check__checktime')
-                list_speday = Userinfo.objects.filter(speday__userid=pkuser, speday__startspecday__month=month).values('speday__startspecday', 'speday__yuanying', 'speday__endspecday').order_by('-speday__startspecday')
+                list_check = Userinfo.objects.filter(userid=pkuser, check__userid=pkuser, check__checktime__month=month, check__checktime__year=year).values('check__checktime').order_by('check__checktime')
+                list_speday = Userinfo.objects.filter(userid=pkuser, speday__userid=pkuser, speday__startspecday__month=month, speday__startspecday__year=year).values('speday__startspecday', 'speday__yuanying', 'speday__endspecday').order_by('speday__startspecday')
             except ObjectDoesNotExist:
-                error = "El funcionario o la marcación no existe"
+                error = "El numero de cedula o la ficha es incorrecto"
                 templateError = loader.get_template('error.html')
                 contextError = {
                     'title': title,
@@ -67,6 +77,57 @@ def viewAll(request):
         'list_user': list_user,
     }
     return HttpResponse(template.render(context, request))
+
+
+
+def calendario(request):
+    title = 'Calendario'
+    template = loader.get_template('calendar.html')
+    checkList = Check.objects.filter(userid=86, checktime__month=12, checktime__year=2016)
+    # years = date.today().year
+    # months = date.today().month
+    # calendario = calendar.month(years, months)
+    marcacion = {}
+
+    a = iter(list(checkList))
+    for i in a:
+        marcacion[i.checktime.day] = [i.checktime.hour, next(a)]
+    
+    # for item in checkList:
+    #     marcacion['lunes'] = [item.checktime.hour]
+       
+    # matriz = []
+    # for item in checkList:
+    #     matriz.append(item.checktime.hour)
+
+    # context = {
+    #     'title': title,
+    #     'calendario': calendario,
+    # }
+    context = {
+        'title': title,
+        'checkList': checkList,
+        'marcacion': marcacion,
+
+    }
+    return HttpResponse(template.render(context, request))
+
+def ckeckJson(request, ci):
+    user = get_object_or_404(Userinfo, ssn=ci)
+    pkuser = user.userid
+    # checkList = get_object_or_404(Check, userid=ci, checktime__day=12, checktime__month=12, checktime__year=2016)
+    # pkuser = user.userid
+    checkList = Check.objects.filter(userid=pkuser, checktime__month=12, checktime__year=2016)
+    # checkList = Userinfo.objects.filter(userid=pkuser, check__userid=pkuser, check__checktime__year=2016, check__checktime__month=12, check__checktime__day=12)
+    # checkList = Userinfo.objects.filter(userid=pkuser, check__userid=pkuser, check__checktime__month=12, check__checktime__year=2016).values('check__checktime').order_by('check__checktime')
+    jsonData = serializers.serialize('json', checkList)
+    # data = {
+    #    'id': check.userid,
+    #    'checktime': check.checktime,
+    # }
+    # jsonData = json.dumps(data)
+    # json.loads(string_json) para convertir json a un diccionario de python
+    return HttpResponse(jsonData, content_type="application/json")
 
 # def formChecks(request):
 #     title = 'Sistema de Marcación'

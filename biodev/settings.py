@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'biometrico',
         'USER': 'postgres',
-        'PASSWORD': '1234',
+        'PASSWORD': 'Aneaes*_',
         'HOST': '192.168.1.40',
         'PORT': '5432',
     }
