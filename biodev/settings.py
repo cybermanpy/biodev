@@ -32,9 +32,12 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'departments.apps.DepartmentsConfig',
+    'months.apps.MonthsConfig',
+    'payobjects.apps.PayobjectsConfig',
     'usersinfo.apps.UsersinfoConfig',
     'spedays.apps.SpedaysConfig',
     'checks.apps.ChecksConfig',
+    'years.apps.YearsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -84,10 +87,10 @@ WSGI_APPLICATION = 'biodev.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'biometrico',
+        'NAME': 'biodev',
         'USER': 'postgres',
         'PASSWORD': 'Aneaes*_',
-        'HOST': '192.168.1.40',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
