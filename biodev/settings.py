@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'usersinfo.apps.UsersinfoConfig',
     'spedays.apps.SpedaysConfig',
     'checks.apps.ChecksConfig',
+    'lines.apps.LinesConfig',
     'years.apps.YearsConfig',
     'django.contrib.admin',
     'django.contrib.auth',

@@ -23,9 +23,9 @@
 		<a href="" class="button-menu icon-menu"></a>
 		<nav class="menu">
 			<ul class="list center-block wrap">
-				<li class="item"><a href="/">Inicio</a></li>
-				<li class="item"><a href="/users/views">Funcionarios</a></li>
-				<li class="item"><a href="">Marcaciones</a></li>
+				<li class="item"><a href="{% url 'checks:formChecks' %}">Inicio</a></li>
+				<li class="item"><a href="{% url 'usersinfo:checks' %}">Funcionarios</a></li>
+				<li class="item"><a href="{% url 'payobjects:listEarning' %}">Informes</a></li>
 				<li class="item"><a href="">Contáctanos</a></li>
 			</ul>
 		</nav>

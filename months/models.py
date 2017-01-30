@@ -4,10 +4,10 @@ from django.db import models
 
 class Month(models.Model):
     number = models.IntegerField(blank=False, null=False)
-    denomination = models.CharField(blank=False, null=False, max_length=140)
+    description = models.CharField(blank=False, null=False, max_length=140)
 
     def __str__(self):
-        return "%s" %(self.denomination)
+        return "%s" %(self.description)
 
     class Meta:
         verbose_name = 'Month'

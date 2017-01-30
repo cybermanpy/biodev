@@ -2,6 +2,7 @@
 
 #from django.forms import ModelForm
 from django import forms
+from datetime import datetime
 # from django.core.exceptions import ValidationError
 
 class FormSearchCheck(forms.Form):
@@ -19,11 +20,15 @@ class FormSearchCheck(forms.Form):
 		("11", "Noviembre"),
 		("12", "Diciembre"),
 		)
-	YEARS = (
-		("2017", "2017"),
-		("2016", "2016"),
-		("2015", "2015"),
-		)
+
+	YEARS = tuple((str(n), str(n)) for n in range(datetime.now().year, 2013, -1))
+
+	# YEARS = (
+	# 	("2017", "2017"),
+	# 	("2016", "2016"),
+	# 	("2015", "2015"),
+	# 	)
+
 	VALUES = (
 		('1', 'Nro. Cedula'),
 		('2', 'Nro. Ficha'),
