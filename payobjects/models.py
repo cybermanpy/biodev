@@ -26,6 +26,7 @@ class Earning(models.Model):
     fkline = models.ForeignKey(Line, on_delete=models.CASCADE)
     fkmonth = models.ForeignKey(Month, on_delete=models.CASCADE)
     fkyear = models.ForeignKey(Year, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return "%s" %(self.fkuserinfo)
