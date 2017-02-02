@@ -32,12 +32,12 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'departments.apps.DepartmentsConfig',
+    'detailusers.apps.DetailusersConfig',
     'months.apps.MonthsConfig',
     'payobjects.apps.PayobjectsConfig',
     'usersinfo.apps.UsersinfoConfig',
     'spedays.apps.SpedaysConfig',
     'checks.apps.ChecksConfig',
-    'lines.apps.LinesConfig',
     'years.apps.YearsConfig',
     'django.contrib.admin',
     'django.contrib.auth',

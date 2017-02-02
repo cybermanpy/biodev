@@ -5,7 +5,7 @@ from .models import Earning
 def EarningList(request):
     title = 'Informe de Pagos'
     template = loader.get_template('earning_list.html')
-    object_list = Earning.objects.all().order_by('fkuserinfo__name', 'fkmonth__number', 'fkpayobject__number')
+    object_list = Earning.objects.all().order_by('-fkyear__description', 'fkuserinfo__name', 'fkmonth__number', 'fkpayobject__number')
     context = {
         'title': title,
         'object_list': object_list,

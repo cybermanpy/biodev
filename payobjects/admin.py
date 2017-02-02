@@ -9,6 +9,6 @@ class AdminPayObject(admin.ModelAdmin):
 @admin.register(Earning)
 class AdminEarning(admin.ModelAdmin):
     list_display = ('id', 'fkuserinfo', 'fkpayobject', 'amount', 'fkmonth', 'fkyear', 'date')
-    list_filter = ('fkuserinfo', 'fkpayobject', 'fkmonth', 'fkyear',)
+    list_filter = ('fkuserinfo', 'fkpayobject', 'fkmonth', 'fkyear')
     search_fields = ('fkuserinfo__name',)
     actions = [export_xls, export_csv, export_xlsx]

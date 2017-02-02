@@ -3,7 +3,6 @@ from django.db import models
 from usersinfo.models import Userinfo
 from months.models import Month
 from years.models import Year
-from lines.models import Line
 
 class PayObject(models.Model):
     number = models.IntegerField(blank=False, null=False)
@@ -23,10 +22,9 @@ class Earning(models.Model):
     fkpayobject = models.ForeignKey(PayObject, on_delete=models.CASCADE)
     amount = models.IntegerField(blank=False, null=False)
     description = models.CharField(blank=True, max_length=255)
-    fkline = models.ForeignKey(Line, on_delete=models.CASCADE)
     fkmonth = models.ForeignKey(Month, on_delete=models.CASCADE)
     fkyear = models.ForeignKey(Year, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
         return "%s" %(self.fkuserinfo)

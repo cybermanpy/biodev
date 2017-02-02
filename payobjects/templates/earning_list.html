@@ -6,41 +6,46 @@
 {% endblock %}
 
 {% block content %}
-
-{% regroup object_list by fkmonth as months %}
-
+    
     <table class="table table-condensed table-striped">
-        {% regroup object_list by fkuserinfo.name as users %}
-        {% for obju in users %}
+        {% regroup object_list by fkyear as years %}
+        {% for objy in years %}
             <tr class="success">
-                <th class="text-center" colspan="7">{{obju.grouper|upper }}</th>
+                <th class="text-center" colspan="7">Año {{objy.grouper|upper }}</th>
             </tr>
-            {% regroup obju.list by fkmonth as months %}
-            {% for objm in months %}
-                <tr class="success">
-                    <th colspan="7">{{objm.grouper|upper }} </th>
+            {% regroup objy.list by fkuserinfo.name as users %}
+            {% for obju in users %}
+                <tr class="{% cycle 'info' 'danger' %}">
+                    <th colspan="7">{{obju.grouper|upper }} </th>
                 </tr>
-                <tr>
-                    <th>Linea</th>
-                    <th>Cedula</th>
-                    <th>Concepto</th>
-                    <th>Denominación</th>
-                    <th>Monto</th>
-                    <th>Año</th>
-                </tr>
-                {% for obj in objm.list %}
-                    <tr>
-                        <td> {{ obj.fkline }} </td>
-                        <td> {{ obj.fkuserinfo.ssn }} </td>
-                        <td> {{ obj.fkpayobject.number }} </td>
-                        <td> {{ obj.fkpayobject.concept }} </td>
-                        <td> {{ obj.amount }} </td>
-                        <td> {{ obj.fkyear }} </td>
+                {% regroup obju.list by fkmonth as months %}
+                {% for objm in months %}
+                    <tr class="success">
+                        <th colspan="7">{{objm.grouper|upper }} </th>
                     </tr>
+                    <tr>
+                        <th>Linea</th>
+                        <th>Cedula</th>
+                        <th>Concepto</th>
+                        <th>Denominación</th>
+                        <th>Monto</th>
+                        <th>Año</th>
+                    </tr>
+                    {% for obj in objm.list %}
+                        <tr>
+                            <td> {{ obj.fkuserinfo.detailuser.line }} </td>
+                            <td> {{ obj.fkuserinfo.ssn }} </td>
+                            <td> {{ obj.fkpayobject.number }} </td>
+                            <td> {{ obj.fkpayobject.concept }} </td>
+                            <td> {{ obj.amount }} </td>
+                            <td> {{ obj.fkyear }} </td>
+                        </tr>
+                    {% endfor %}
                 {% endfor %}
             {% endfor %}
         {% endfor%}
     </table>
+
     <!-- <table class="table table-condensed table-striped">
         {# % regroup object_list by fkmonth as months % #}
         {# % for objm in months % #}
