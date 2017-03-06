@@ -47,11 +47,16 @@ class Userinfo(models.Model):
     privilege = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return "%s" %(self.name)
     
     class Meta:
         managed = False
         db_table = 'userinfo'
+
+    def _get_full_name(self):
+        return "%s %s" %(self.name, self.userid)
+
+    full_name = property(_get_full_name)
 
 # class Checkinout(models.Model):
 #     userid = models.ForeignKey(Userinfo, models.DO_NOTHING, db_column='userid')

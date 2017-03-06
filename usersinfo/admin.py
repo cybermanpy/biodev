@@ -4,7 +4,7 @@ from actions import export_xls, export_csv, export_xlsx
 
 @admin.register(Userinfo)
 class AdminUserInfo(admin.ModelAdmin):
-    list_display = ('userid', 'badgenumber', 'name', 'ssn', )
+    list_display = ('userid', 'badgenumber', 'name', 'ssn', 'full_name')
     list_filter = ('defaultdeptid',)
     search_fields = ('name', )
     actions = [export_xls, export_csv, export_xlsx]
