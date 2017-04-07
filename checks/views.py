@@ -19,7 +19,7 @@ from django.core import serializers
 def formChecks(request):
     title = 'Sistema de Marcación'
     template = loader.get_template('form_check.html')
-    template1 = loader.get_template('list_checks.html')
+    template1 = loader.get_template('list_checks1.html')
     if request.method == 'POST':
         form = FormSearchCheck(request.POST)
         if form.is_valid():
@@ -37,8 +37,20 @@ def formChecks(request):
                 # getuser = Userinfo.objects.get(ssn=ci)
                 name = getuser.name
                 pkuser = getuser.userid
-                list_check = Userinfo.objects.filter(userid=pkuser, check__userid=pkuser, check__checktime__month=month, check__checktime__year=year).values('check__checktime').order_by('check__checktime')
-                list_speday = Userinfo.objects.filter(userid=pkuser, speday__userid=pkuser, speday__startspecday__month=month, speday__startspecday__year=year).values('speday__startspecday', 'speday__yuanying', 'speday__endspecday').order_by('speday__startspecday')
+                # list_checkin = Userinfo.objects.filter(userid=pkuser, check__userid=pkuser, check__checktime__month=month, check__checktime__year=year).values('check__checktime').order_by('check__checktime')
+                list_checkin = Userinfo.objects.filter(userid=pkuser, check__userid=pkuser, check__checktime__month=month, check__checktime__year=year, check__checktime__hour__gte=4, check__checktime__hour__lte=12).values('check__checktime').order_by('check__checktime')
+                list_checkout = Userinfo.objects.filter(userid=pkuser, check__userid=pkuser, check__checktime__month=month, check__checktime__year=year, check__checktime__hour__gte=13).values('check__checktime').order_by('check__checktime')
+                list_speday = Userinfo.objects.filter(userid=pkuser, speday__userid=pkuser, speday__startspecday__month=month, speday__startspecday__year=year).values('speday__startspecday', 'speday__yuanying', 'speday__endspecday', 'speday__date').order_by('speday__startspecday')
+                # indata = []
+                # outdata = []
+                # for chkin in list_checkin:
+                #     indata.append(chkin['check__checktime'])
+
+                # for chkout in list_checkout:
+                #     outdata.append(chkout['check__checktime'])
+
+                # mark_list = { 'entrada': indata, 'salida': outdata }
+
             except ObjectDoesNotExist:
                 error = "El numero de cedula o la ficha es incorrecto"
                 templateError = loader.get_template('error.html')
@@ -52,7 +64,8 @@ def formChecks(request):
             # list_check = Check.objects.filter(Q(userid=cedula) | Q(checktime__month=m)).order_by('-checktime')
             context1 = {
                 'title': title,
-                'list_check': list_check,
+                'list_checkin': list_checkin,
+                'list_checkout': list_checkout,
                 'list_speday': list_speday,
                 'list1': list1,
                 'name': name,

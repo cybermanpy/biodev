@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+{% load widget_tweaks %}
+{% load checks_extras %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+
+    <table class="table table-condensed table-striped">
+        <tr>
+            <th colspan="4"> {{ name }} </th>
+        </tr>
+        <tr>
+            <td>
+                <table class="table table-condensed table-striped">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Entrada</th>
+                    </tr>
+                    {% for d in list_checkin %}
+                        <tr>
+                            <td>{{ d.check__checktime|dateF2 }}</td>
+                            <td>{{ d.check__checktime|dateF1 }}</td> 
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+            <td>
+                <table class="table table-condensed table-striped">
+                    <tr>
+                        <th>Salida</th>
+                        <th>RE</th>
+                        <th>Fecha</th>
+                    </tr>
+                    {% for d in list_checkout %}
+                        <tr>
+                            <td>{{ d.check__checktime|dateF1 }}</td>
+                            <td>{{ d.check__checktime|total:list1 }}</td>
+                            <td>{{ d.check__checktime|dateF2 }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+            <!-- <td>
+                <table class="table table-condensed table-striped">
+                    <tr>
+                        <th>Entrada</th>
+                        <th>Salida</th>
+                        <th>Justificación</th>
+                        <th>Fecha</th>
+                    </tr>
+                    {% for s in list_speday %}
+                        <tr>
+                            <td>{# { s.speday__startspecday|dateF1 } #}</td>
+                            <td>{# { s.speday__endspecday|dateF1 } #}</td>
+                            <td>{# { s.speday__yuanying } #}</td>
+                            <td>{# { s.speday__date|dateF2 } #}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td> -->
+        </tr>
+    </table>
+
+{% endblock %}
