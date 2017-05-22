@@ -34,7 +34,9 @@ class FormSearchCheck(forms.Form):
 		('2', 'Nro. Ficha'),
 		)
 	ci = forms.CharField(label='Cedula', error_messages={'required': 'Debe ingresar un valor'})
+	MONTHS = tuple([(u'', 'Select')] + list(MONTHS))
 	month = forms.ChoiceField(choices=MONTHS)
+	YEARS = tuple([(u'', 'Select')] + list(YEARS))
 	year = forms.ChoiceField(choices=YEARS)
 	options = forms.ChoiceField(choices=VALUES, widget=forms.RadioSelect, error_messages={'required': 'Debe seleccionar una opción'})
 	

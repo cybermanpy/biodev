@@ -12,7 +12,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
 import calendar
 from django.shortcuts import get_object_or_404
-# import json
+import json
 from django.core import serializers
 # Create your views here.
 
@@ -125,22 +125,50 @@ def calendario(request):
     }
     return HttpResponse(template.render(context, request))
 
-def ckeckJson(request, ci):
+def getForm(request):
+    title = 'Sistema de Marcación'
+    form = FormSearchCheck()
+    template = loader.get_template('formajax.html')
+    context = {
+        'title': title,
+        'form': form,
+    }
+    return HttpResponse(template.render(context, request))
+
+def formParam(request):
+    ci = request.GET.get('ci', None)
+    month = request.GET.get('month', None)
+    year = request.GET.get('year', None)
+    data = {
+        'ci': ci,
+        'month': month,
+        'year': year
+    }
+    return HttpResponse(json.dumps(data, ensure_ascii=False, encoding="utf-8"), content_type='application/json')
+
+# def ckeckJson(request, ci, month, year):
+#     user = get_object_or_404(Userinfo, ssn=ci)
+#     pkuser = user.userid
+#     # checkList = get_object_or_404(Check, userid=ci, checktime__day=12, checktime__month=12, checktime__year=2016)
+#     # pkuser = user.userid
+#     checkList = Check.objects.filter(userid=pkuser, checktime__month=month, checktime__year=year)
+#     # checkList = Userinfo.objects.filter(userid=pkuser, check__userid=pkuser, check__checktime__year=2016, check__checktime__month=12, check__checktime__day=12)
+#     # checkList = Userinfo.objects.filter(userid=pkuser, check__userid=pkuser, check__checktime__month=12, check__checktime__year=2016).values('check__checktime').order_by('check__checktime')
+#     jsonData = serializers.serialize('json', checkList)
+#     # data = {
+#     #    'id': check.userid,
+#     #    'checktime': check.checktime,
+#     # }
+#     # jsonData = json.dumps(data)
+#     # json.loads(string_json) para convertir json a un diccionario de python
+#     return HttpResponse(jsonData, content_type="application/json")
+
+def ckeckJson(request, ci, month, year):
     user = get_object_or_404(Userinfo, ssn=ci)
     pkuser = user.userid
-    # checkList = get_object_or_404(Check, userid=ci, checktime__day=12, checktime__month=12, checktime__year=2016)
-    # pkuser = user.userid
-    checkList = Check.objects.filter(userid=pkuser, checktime__month=12, checktime__year=2016)
-    # checkList = Userinfo.objects.filter(userid=pkuser, check__userid=pkuser, check__checktime__year=2016, check__checktime__month=12, check__checktime__day=12)
-    # checkList = Userinfo.objects.filter(userid=pkuser, check__userid=pkuser, check__checktime__month=12, check__checktime__year=2016).values('check__checktime').order_by('check__checktime')
-    jsonData = serializers.serialize('json', checkList)
-    # data = {
-    #    'id': check.userid,
-    #    'checktime': check.checktime,
-    # }
-    # jsonData = json.dumps(data)
-    # json.loads(string_json) para convertir json a un diccionario de python
-    return HttpResponse(jsonData, content_type="application/json")
+    object_list = Check.objects.filter(userid=pkuser, checktime__month=month, checktime__year=year)
+    data = [{'name': str(item.userid), 'check': str(item.checktime)} for item in object_list]
+    return HttpResponse(json.dumps(data, ensure_ascii=False, encoding="utf-8"), content_type='application/json')
 
 # def formChecks(request):
 #     title = 'Sistema de Marcación'
