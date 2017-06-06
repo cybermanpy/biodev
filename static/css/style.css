@@ -1,0 +1,38 @@
+@media (min-width: 900px) {
+     h1, h2, h3, h4, h5 {
+        text-align: center
+    }
+    .container{
+        width: 800px;
+    }
+
+    .table {
+        width: 700px;
+        font-size: 10px;
+    }
+
+    .flex-container {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: baseline;
+        align-items: baseline;
+        -webkit-justify-content: center;
+        justify-content: center;
+        width: 700px;
+    }
+
+    .flex-item1 {
+        width: 250px;
+        margin: 5px;
+    }
+
+    .flex-item2 {
+        width: 390px;
+        margin: 5px;
+    }
+
+    .image img {
+        width: 100%;
+        height: auto;
+    }
+}

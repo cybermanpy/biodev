@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	{% load staticfiles %}
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=divice-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-	<link rel="stylesheet" href="{% static 'css/style.css' %}">
-	<title> {% block title %}  {% endblock %} </title>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=divice-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title> {% block title %}  {% endblock %} </title>
 </head>
 <body>
     <section class="container">
@@ -21,12 +21,11 @@
                     <h4> {{ title|upper }} </h4>
                 </div>
             </div>
-            {% include "menu.html" %}
         </header>
         {% block content %} {% endblock %}
     </section>
-	<script src="{% static 'js/jquery.min.js' %}"></script>
-	<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-	{% block javascript %}{% endblock %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    {% block javascript %}{% endblock %}
 </body>
 </html>

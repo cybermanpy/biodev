@@ -39,8 +39,11 @@
             $.getJSON(data, function( data ) {
               console.log(data);
               for(i = 0; i< data.length; i++){
+                var d1 = new Date(data[0]['check'])
+                var a = d1.getHours()+':'+d1.getMinutes();
                 $('#result').append('<p>'+data[i]['name']+ ' ' + data[i]['check']+ '</p>');
               }
+              console.log(a);
             });
             }
       });

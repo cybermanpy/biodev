@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>Ficha</th>
+                <th>Nombre</th>
+                <th>Cedula</th>
+                <th>Fecha Nacimiento</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in users %}
+                <tr>
+                    <td><a href="{% url 'usersinfo:viewCertificate' item.badgenumber %}"> {{ item.badgenumber }} </a></td>
+                    <td> {{ item.name }} </td>
+                    <td> {{ item.ssn }} </td>
+                    <td> {{ item.birthday }} </td>
+                </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+{% endblock %}

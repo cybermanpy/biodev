@@ -88,10 +88,10 @@ WSGI_APPLICATION = 'biodev.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'biometrico',
+        'NAME': 'biodev',
         'USER': 'postgres',
         'PASSWORD': 'Aneaes*_',
-        'HOST': '192.168.1.40',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
