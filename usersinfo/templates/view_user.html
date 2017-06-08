@@ -11,6 +11,7 @@
                 <th>Ficha</th>
                 <th>Nombre</th>
                 <th>Cedula</th>
+                <th>Ingreso Institución</th>
                 <th>Fecha Nacimiento</th>
             </tr>
         </thead>
@@ -20,6 +21,7 @@
                     <td><a href="{% url 'usersinfo:viewCertificate' item.badgenumber %}"> {{ item.badgenumber }} </a></td>
                     <td> {{ item.name }} </td>
                     <td> {{ item.ssn }} </td>
+                    <td> {{ item.hiredday }} </td>
                     <td> {{ item.birthday }} </td>
                 </tr>
             {% endfor%}
